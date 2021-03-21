@@ -24,3 +24,25 @@ yarn-error.log*
 .vscode
 frontend/node_modules
 backend/conditions_tracker_project/conditions_tracker_app/migrations
+backend/conditions_tracker_project/conditions_tracker_app/__pycache__
+backend/conditions_tracker_project/db.sqlite3
+
+/.pnp
+.pnp.js
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*

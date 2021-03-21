@@ -1,0 +1,1 @@
+export const graphql_server = 'http://localhost:8000/graphql/'
