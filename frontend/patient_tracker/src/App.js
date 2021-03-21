@@ -3,7 +3,7 @@ import { graphql_server } from './constants.js';
 
 import {
   BrowserRouter as Router,
-  Route, Switch
+  Route, Switch, Link
 } from 'react-router-dom'
 
 import { DetailPatient } from './DetailPatient.js'
@@ -23,6 +23,9 @@ const App = () => {
       <Router>
         <ApolloProvider client={client}>
           <div className={"container"} style={{marginTop:'5%', marginBottom:'10%'}}>
+            <h1>Patient Tracking</h1>
+            <Link to={"/create"} className="btn btn-primary">Add Patient</Link>
+            
             <Switch>
               < Route exact path="/" component={PatientInfo} />
               < Route exact path="/patients/:id" component={DetailPatient} />

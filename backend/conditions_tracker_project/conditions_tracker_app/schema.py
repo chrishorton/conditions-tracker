@@ -57,14 +57,14 @@ class createPatient(graphene.Mutation):
 
     def mutate(self, info, first_name,last_name,age,contact_info,gender,conditions):
         condition = ConditionsModel(
-                        condition_name=conditions.name,
+                        condition_name=conditions.condition_name,
                         severity=conditions.severity,
                         start_date=conditions.start_date,
                         end_date=conditions.end_date
                      )
 
         condition.save()
-        conditions = ConditionsModel.objects.create(name=conditions.condition_name, severity=conditions.severity, start_date=conditions.start_date, end_date=conditions.end_date)
+        conditions = ConditionsModel.objects.create(condition_name=conditions.condition_name, severity=conditions.severity, start_date=conditions.start_date, end_date=conditions.end_date)
 
         patient = PatientModel(
             first_name   =  first_name,
@@ -88,7 +88,6 @@ class createPatient(graphene.Mutation):
 
 
 # Read
-
 class Query(graphene.ObjectType):
     patients = graphene.List(PatientType)
     patient_by_id = graphene.Field(PatientType, id=graphene.Int())
@@ -100,7 +99,78 @@ class Query(graphene.ObjectType):
         return PatientModel.objects.get(pk=id)
 
 
+class updatePatient(graphene.Mutation):
+    first_name = graphene.String()
+    last_name = graphene.String()
+    age = graphene.Int()
+    contact_info = graphene.String()
+    gender = graphene.String()
+    avatar = Upload(required=False)
+    conditions = graphene.Field(ConditionsType)
+    
+    class Arguments:
+        id = graphene.ID()
+        first_name = graphene.String()
+        last_name = graphene.String()
+        age = graphene.Int()
+        contact_info = graphene.String()
+        gender = graphene.String()
+        avatar = Upload(required=False)
+        conditions = ConditionsInput(required=False, name="conditions")
+
+    patient = graphene.Field(PatientType)
+    
+    def mutate(self, info, first_name,last_name,age,contact_info,gender,conditions):
+
+        condition = ConditionsModel(
+            condition_name=conditions.condition_name,
+            severity=conditions.severity,
+            start_date=conditions.start_date,
+            end_date=conditions.end_date
+        )
+
+        condition.save()
+        conditions = ConditionsModel.objects.create(condition_name=conditions.condition_name, severity=conditions.severity, start_date=conditions.start_date, end_date=conditions.end_date)
+
+        patient = PatientModel.objects.get(pk=id)
+        
+        patient.first_name = first_name
+        patient.last_name = last_name
+        patient.age = age
+        patient.contact_info = contact_info
+        patient.gender = gender
+        patient.conditions = conditions
+
+        patient.save()
+
+        return UpdatePatient( 
+            first_name   = patient.first_name,
+            last_name    = patient.last_name,
+            age          = patient.age,
+            contact_info = patient.contact_info,
+            gender       = patient.gender,
+            conditions   = patient.conditions
+        )
+
+class deletePatient(graphene.Mutation):
+    id = graphene.Int()
+
+    class Arguments:
+        id = graphene.Int()
+
+    patient = graphene.Field(PatientType)
+
+    def mutate(self, info, id):
+        patient = PatientModel.objects.get(pk=id)
+        if patient is not None:
+            patient.delete()
+        return DeletePatient(patient.id)
+
+
 class Mutation(graphene.ObjectType):
     create_patient = createPatient.Field()
+    edit_patient   = updatePatient.Field()
+    delete_patient = deletePatient.Field()
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

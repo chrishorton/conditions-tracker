@@ -63,3 +63,20 @@ export const QUERY_SINGLE_PATIENT = gql`
         }
     }
 `;
+
+const UPDATE_PATIENT = gql`
+  mutation UpdatePatient ($id: Int!, $text: String!, $isCompleted: Boolean!) {
+    updatePatient (id: $id, text: $text, isCompleted: $isCompleted) {
+        id
+    }
+  }
+`;
+
+
+export const DELETE_PATIENT = gql`
+  mutation DeletePatient($id: Int!) {
+    deletePatient(id: $id) {
+      id
+    }
+  }
+`;

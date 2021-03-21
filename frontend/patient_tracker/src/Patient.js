@@ -1,9 +1,10 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_PATIENTS, CREATE_PATIENT } from './queries.js';
+import { QUERY_PATIENTS, CREATE_PATIENT, DELETE_PATIENT } from './queries.js';
 import { Link } from 'react-router-dom';
 
 export function PatientInfo() {
+    const [deletePatient] = useMutation(DELETE_PATIENT);
 
     const { data, loading } = useQuery(
         QUERY_PATIENTS
@@ -27,6 +28,16 @@ export function PatientInfo() {
                         <li>Gender: { gender }</li>
                         <li>Contact: { contactInfo }</li>
                     </ul>
+                    <form onSubmit={(e) => {
+                        deletePatient({variables: { 
+                            id: id
+                        }
+                    })
+                    e.preventDefault();
+                    window.location.reload();
+                    }}>
+                        <button type="submit">X</button>
+                    </form>
                 </div>
             </div>
         </div>
