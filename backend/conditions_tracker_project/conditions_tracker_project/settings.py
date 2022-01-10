@@ -31,6 +31,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'https://patient-conditions.herokuapp.com/',
+    'localhost',
+    '127.0.0.1',
 ]
 
 
