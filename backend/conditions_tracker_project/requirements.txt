@@ -1,6 +1,6 @@
 aniso8601==7.0.0
 appnope==0.1.2
-asgiref==3.3.1
+asgiref
 attrs==20.3.0
 backcall==0.2.0
 certifi==2020.12.5
