@@ -1,1 +1,1 @@
-web: uvicorn conditions_tracker_app.apps:app --workers 4
+web: uvicorn conditions_tracker_project.asgi:application --workers 4
