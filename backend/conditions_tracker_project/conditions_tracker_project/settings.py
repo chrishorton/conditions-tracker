@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import dj_database_url
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +29,9 @@ SECRET_KEY = 't0bry2-=w7x62n^&go$9=2%)7)#jn!(b1*hmy5g67+ol5-vg%k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://patient-conditions.herokuapp.com/',
+]
 
 
 # Application definition
@@ -150,4 +153,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, ‘static’)
+
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
