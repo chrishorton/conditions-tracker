@@ -157,6 +157,8 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+STATIC_URL = "frontend/patient_tracker/"
+
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
